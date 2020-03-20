@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <!-- link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="opmaak.css"> -->
+
+    <script>
+
+        function checkInfo() {
+            var val1 = document.getElementById("password").value;
+            var val2 = document.getElementById("power").value;
+            var val3 = document.getElementById("increase_amount").value;
+            if (val1 == "" || val2 == "" || val3 == "" || val2 < 1 || val3 < 1) {
+                return document.getElementById("TheEnd").innerHTML = "An error occurd";
+            }
+            else {
+                encrypt(val1, val2, val3)
+            }
+        }
+
+        function encrypt(pass, strength, increase_amount) {
+            var char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUNWXYZ0123456789`-=[];',./~!@#$%^&*()_+{}|:<>?"
+            var temp = 0;
+            var dict = {};
+            for (var i = 0; i < char.length; i++) {
+                if (i + i >= char.length) {
+                    dict[char[i]] = char[temp];
+                    temp++;
+                }
+
+                else {
+                    dict[i] = char[i + increase_amount];
+                }
+            }
+            //console.log(dict)
+            var text = "";
+            var end = "";
+            for (var i = 0; i < pass.length; i++) {
+                for (var a = 0; a < strength; a++) {
+                    num = Math.floor(Math.random() * char.length) + 1;
+                    text += pass[i];
+                    text += char[num - 1];
+                }
+            }
+
+            for (var i = 0; i < text.length; i++) {
+                end += text[text.length - i - 1]
+            }
+            alert(end)
+            //document.getElementById("TheEnd").innerHTML = end;
+        }
+    </script>
+
+</head>
+<body>
+    <center>
+        <button onclick="checkInfo()" style="font-size:1em;margin:25px;">Encrypt</button>
+        <input id="password" type="text" placeholder="Password">
+        <input id="power" type="number" placeholder="Power">
+        <input id="increase_amount" type="number" placeholder="Increase Amount">
+        <h1 id="TheEnd"></h1>
+    </center>
+</body>
+</html>
